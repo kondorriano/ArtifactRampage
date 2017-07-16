@@ -2,36 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerScript : MonoBehaviour {
 
-    Rigidbody rb;
-
-    private bool grounded = false;
-    private float gravityForce = 9.8f;
-    private Vector3 gravityDir = Vector3.down;
-
-	// Use this for initialization
-	void Start () {
-        rb = GetComponent<Rigidbody>();
-	}
+    float speedHorizontal = 3.0f;
+    Vector3 dir;
 	
 	// Update is called once per frame
 	void Update () {
-        if (!grounded)
-        {
-            rb.velocity += gravityDir * gravityForce * Time.deltaTime;
-        }
-        Debug.Log(grounded + " " + rb.velocity);
+		dir = Input.GetAxisRaw ("Vertical") * transform.forward;
+		dir += Input.GetAxisRaw("Horizontal") * transform.right;
+		transform.Translate (dir * Time.deltaTime * speedHorizontal);
 	}
-
-    private void OnCollisionStay(Collision collision)
-    {
-        grounded = collision.gameObject.CompareTag("Floor");
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Floor")) ;
-    }
 }
