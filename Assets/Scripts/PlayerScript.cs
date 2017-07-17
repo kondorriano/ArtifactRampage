@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerScript : MonoBehaviour {
 
-    Rigidbody rb;
     CapsuleCollider col;
 
     private bool grounded = false;
@@ -14,17 +12,7 @@ public class PlayerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        rb = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (!grounded)
-        {
-            rb.velocity += gravityDir * gravityForce * Time.deltaTime;
-        }
-        //Debug.Log(grounded + " " + rb.velocity);
 	}
 
     private void OnCollisionStay(Collision collision)
@@ -41,4 +29,14 @@ public class PlayerScript : MonoBehaviour {
     {
         transform.position = feetPos + new Vector3(0, transform.localScale.y * col.height * .5f, 0);
     }
+
+    float speedHorizontal = 3.0f;
+    Vector3 dir;
+	
+	// Update is called once per frame
+	void Update () {
+		dir = Input.GetAxisRaw ("Vertical") * transform.forward;
+		dir += Input.GetAxisRaw("Horizontal") * transform.right;
+		transform.Translate (dir * Time.deltaTime * speedHorizontal);
+	}
 }
