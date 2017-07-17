@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour {
 
     Rigidbody rb;
+    CapsuleCollider col;
 
     private bool grounded = false;
     private float gravityForce = 9.8f;
@@ -14,6 +15,7 @@ public class PlayerScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<CapsuleCollider>();
 	}
 	
 	// Update is called once per frame
@@ -22,7 +24,7 @@ public class PlayerScript : MonoBehaviour {
         {
             rb.velocity += gravityDir * gravityForce * Time.deltaTime;
         }
-        Debug.Log(grounded + " " + rb.velocity);
+        //Debug.Log(grounded + " " + rb.velocity);
 	}
 
     private void OnCollisionStay(Collision collision)
@@ -33,5 +35,10 @@ public class PlayerScript : MonoBehaviour {
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Floor")) ;
+    }
+
+    public void TeleportTo(Vector3 feetPos)
+    {
+        transform.position = feetPos + new Vector3(0, transform.localScale.y * col.height * .5f, 0);
     }
 }
