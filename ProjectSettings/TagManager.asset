@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Projectile
   - Floor
+  - FxTemporaire
+  - projectile
+  - Fire
   layers:
   - Default
   - TransparentFX
