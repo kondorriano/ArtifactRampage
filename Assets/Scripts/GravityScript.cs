@@ -25,7 +25,7 @@ public class GravityScript : MonoBehaviour {
         else
             rb.velocity += gravityDir * gravityForce * Time.deltaTime;
   
-		Debug.Log(grounded + " " + rb.velocity + " " + gravityDir);
+		//Debug.Log(grounded + " " + rb.velocity + " " + gravityDir);
     }
 
     private void OnCollisionStay(Collision collision)
