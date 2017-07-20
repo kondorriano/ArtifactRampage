@@ -34,7 +34,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4276290242525870}
-  - component: {fileID: 114591121710762666}
+  - component: {fileID: 114545567014576652}
   m_Layer: 0
   m_Name: DynHand
   m_TagString: Untagged
@@ -156,7 +156,7 @@ Transform:
   m_Father: {fileID: 4276290242525870}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 9.116, y: 67.824005, z: 27.937002}
---- !u!114 &114591121710762666
+--- !u!114 &114545567014576652
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

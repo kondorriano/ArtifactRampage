@@ -10,7 +10,7 @@ public class DynamiteScript : MonoBehaviour {
 	private IEnumerator coroutine;
 
 	public int pId = 1;
-	public TestScript parent = null;
+	public DynamiteHandScript parent = null;
 
 	// Use this for initialization
 	void Start () {
@@ -34,7 +34,7 @@ public class DynamiteScript : MonoBehaviour {
 		if (!activated) {
 			activated = true;
 			coroutine = timer ();
-			Debug.Log ("The path is lit.");
+			Debug.Log ("U need to fix dis sht, enable collisions after throwing.");
 			StartCoroutine (coroutine);
 		}
 	}

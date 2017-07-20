@@ -11,13 +11,13 @@ public class GravityScript : MonoBehaviour {
     private float gravityForce = 9.8f;
     private Vector3 gravityDir = Vector3.down;
 
-    // Use this for initialization
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
 		if (grounded)
@@ -40,19 +40,21 @@ public class GravityScript : MonoBehaviour {
             grounded = false;
     }
 
-    public void setGravityDir(Vector3 newDir)
-    {
-        gravityDir = newDir;
-    }
 
-    public void setGravityForce(float newForce)
-    {
-        gravityForce = newForce;
-    }
+	//SETERS FOR GRAVITY PARAM
+	    public void setGravityDir(Vector3 newDir)
+	    {
+	        gravityDir = newDir;
+	    }
 
-    public void setGravity(Vector3 newDir, float newForce)
-    {
-        gravityDir = newDir;
-        gravityForce = newForce;
-    }
+	    public void setGravityForce(float newForce)
+	    {
+	        gravityForce = newForce;
+	    }
+
+	    public void setGravity(Vector3 newDir, float newForce)
+	    {
+	        gravityDir = newDir;
+	        gravityForce = newForce;
+	    }
 }
