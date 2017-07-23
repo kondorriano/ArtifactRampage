@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChampionGlove : Item {
 
-    private enum State
+    private enum GloveState
     {
         FLYING = 0,
         ATTACHED = 1,
@@ -19,7 +19,7 @@ public class ChampionGlove : Item {
     }
 
     private List<TimedVelocity> vTimeline;
-    private State state = State.ATTACHED;
+    private GloveState state = GloveState.ATTACHED;
     public float liftoffSpeed = 5.0f;
     public float liftoffWindow = 0.25f;
     public float flySpeed = 10.0f;
@@ -40,12 +40,12 @@ public class ChampionGlove : Item {
         // Return if no wand owns me
         if (attachedWand == null) return;
         // Return if already flying
-        if (state == State.FLYING) {
+        if (state == GloveState.FLYING) {
             timeCounter += Time.deltaTime;
             if (timeCounter >= flyTime)
             {
                 timeCounter = 0;
-                state = State.RETRIEVE;
+                state = GloveState.RETRIEVE;
                 rb.velocity = Vector3.zero;
                 rb.isKinematic = true;
                 rb.useGravity = true;
@@ -53,13 +53,13 @@ public class ChampionGlove : Item {
             //rb.velocity += (attachedWand.transform.position - transform.position).normalized*flybackSpeed*Time.deltaTime;
             return;
         }
-        if(state == State.RETRIEVE)
+        if(state == GloveState.RETRIEVE)
         {
             timeCounter += Time.deltaTime;
             transform.position = Vector3.Lerp(transform.position, attachedWand.transform.position, timeCounter / retrieveTime);
             if(timeCounter >= retrieveTime)
             {
-                state = State.ATTACHED;
+                state = GloveState.ATTACHED;
                 transform.SetParent(attachedWand.transform);
                 rb.velocity = Vector3.zero;
                 rb.isKinematic = true;
@@ -72,7 +72,7 @@ public class ChampionGlove : Item {
         // Check for liftoff
         Vector3 liftVel = TimelineVelocityChange();
         if(liftVel != Vector3.zero) {
-            state = State.FLYING;
+            state = GloveState.FLYING;
             transform.SetParent(null);
             rb.velocity = liftVel.normalized*flySpeed;
             rb.isKinematic = false;
@@ -108,13 +108,13 @@ public class ChampionGlove : Item {
     public override void Attach(WandController wand)
     {
         base.Attach(wand);
-        state = State.ATTACHED;
+        state = GloveState.ATTACHED;
     }
 
     public override void Deattach(WandController wand)
     {
         if (attachedWand != wand) return;
-        if (state == State.RETRIEVE) rb.velocity = (attachedWand.transform.position - transform.position).normalized * flySpeed *(flyTime/retrieveTime);
+        if (state == GloveState.RETRIEVE) rb.velocity = (attachedWand.transform.position - transform.position).normalized * flySpeed *(flyTime/retrieveTime);
         attachedWand = null;
         transform.SetParent(null);
         rb.isKinematic = false;
@@ -123,7 +123,7 @@ public class ChampionGlove : Item {
 
     public override void Throw(Vector3 vel)
     {
-        if (state != State.ATTACHED) return;
+        if (state != GloveState.ATTACHED) return;
         rb.velocity = vel;
     }
 

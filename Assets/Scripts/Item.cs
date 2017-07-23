@@ -5,6 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Item : MonoBehaviour {
 
+    protected enum State
+    {
+        STORED = 0,
+        ATTACHED = 1,
+        FREE = 2
+    }
+
     public Vector3 offsetRotation;
     protected WandController attachedWand;
     protected Rigidbody rb;
@@ -27,8 +34,8 @@ public class Item : MonoBehaviour {
         attachedWand = wand;
         transform.SetParent(wand.transform);
         transform.localPosition = Vector3.zero;
-        transform.rotation = Quaternion.identity;
-        transform.Rotate(offsetRotation);
+        transform.localRotation = Quaternion.identity;
+        transform.Rotate(offsetRotation, Space.Self);
         rb.isKinematic = true;
     }
 
@@ -54,5 +61,10 @@ public class Item : MonoBehaviour {
     public virtual void Throw(Vector3 vel)
     {
         rb.velocity = vel;
+    }
+
+    public virtual void ActionEvent()
+    {
+
     }
 }
