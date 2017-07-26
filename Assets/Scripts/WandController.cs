@@ -7,6 +7,8 @@ public class WandController : MonoBehaviour {
     private Valve.VR.EVRButtonId triggerButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger;
     private Valve.VR.EVRButtonId gripButton = Valve.VR.EVRButtonId.k_EButton_Grip;
     private Valve.VR.EVRButtonId touchPadButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad;
+    private Valve.VR.EVRButtonId menuButton = Valve.VR.EVRButtonId.k_EButton_ApplicationMenu;
+
 
     private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }
     private SteamVR_TrackedObject trackedObj;
@@ -34,9 +36,9 @@ public class WandController : MonoBehaviour {
             return;
         }
 
-        if(controller.GetPressUp(gripButton))
+        if(controller.GetPressUp(menuButton))
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("DebugVR");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         }
 
         if (controller.GetPressDown(triggerButton) && grabableItem != null)
@@ -44,6 +46,11 @@ public class WandController : MonoBehaviour {
             grabableItem.Attach(this);
             itemInUse = grabableItem;
             itemInUse.Untouched(this);
+        }
+
+        if (controller.GetPressDown(touchPadButton) && itemInUse != null)
+        {
+            itemInUse.ActionEvent();
         }
 
         if (controller.GetPressUp(triggerButton) && itemInUse != null)
